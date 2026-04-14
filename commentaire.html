@@ -14,6 +14,7 @@
       --text-soft: #5f5d57;
       --border: #e7e2d9;
       --success-bg: #f7ebe7;
+      --green: #28a745;
     }
 
     * {
@@ -38,7 +39,7 @@
       border: 1px solid var(--border);
       border-radius: 22px;
       padding: 32px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     }
 
     .brand-row {
@@ -122,6 +123,7 @@
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
       background: #fcfbf9;
       color: var(--text-main);
+      font-family: inherit;
     }
 
     textarea:focus {
@@ -145,6 +147,7 @@
       font-weight: 700;
       cursor: pointer;
       transition: transform 0.08s ease, opacity 0.2s ease;
+      font-family: inherit;
     }
 
     button:hover {
@@ -160,18 +163,15 @@
       cursor: not-allowed;
     }
 
-    .ok, .err {
+    .err,
+    .final-message {
       display: none;
       margin-top: 16px;
-      padding: 12px 14px;
+      padding: 14px 16px;
       border-radius: 12px;
       font-size: 14px;
       font-weight: 600;
-    }
-
-    .ok {
-      background: #f7ebe7;
-      color: var(--brand-primary);
+      line-height: 1.6;
     }
 
     .err {
@@ -179,11 +179,67 @@
       color: #b42318;
     }
 
+    .final-message {
+      background: #f8fbf8;
+      border: 1px solid #d8eadc;
+      color: #1f4d2a;
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .check-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .check-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      font-size: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pop 0.35s ease;
+      box-shadow: 0 8px 20px rgba(40, 167, 69, 0.18);
+    }
+
+    .final-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #1f4d2a;
+    }
+
+    .final-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #3d4b40;
+    }
+
     .footer-note {
       margin-top: 18px;
       font-size: 12px;
       color: #908d86;
       line-height: 1.5;
+    }
+
+    #formBlock.hidden {
+      display: none;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0.65);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
 
     @media (max-width: 640px) {
@@ -211,26 +267,39 @@
         />
         <div class="brand-text">
           <div class="brand-name">Distritec</div>
-          <div class="brand-sub">Solutions supply chain</div>
+          <div class="brand-sub">Solutions Supply Chain</div>
         </div>
       </div>
 
       <h1>Merci pour votre note</h1>
-      <p class="intro" id="message">
-        Merci pour votre retour.
-      </p>
+      <p class="intro" id="message">Merci pour votre retour.</p>
       <div class="badge" id="noteBadge">Note reçue</div>
 
-      <div class="section-label">Un commentaire complémentaire ?</div>
-      <textarea
-        id="commentaire"
-        placeholder="Dites-nous en quelques mots comment s'est passée votre prestation..."
-      ></textarea>
+      <div id="formBlock">
+        <div class="section-label">Un commentaire complémentaire ?</div>
+        <textarea
+          id="commentaire"
+          placeholder="Dites-nous en quelques mots comment s'est passée votre prestation..."
+        ></textarea>
 
-      <button id="sendBtn" onclick="envoyer()">Envoyer mon commentaire</button>
+        <button id="sendBtn" onclick="envoyer()">Envoyer mon commentaire</button>
 
-      <div class="ok" id="ok">Merci, votre commentaire a bien été transmis.</div>
-      <div class="err" id="err">Une erreur est survenue. Merci de réessayer.</div>
+        <div class="err" id="err">
+          Une erreur est survenue. Merci de réessayer.
+        </div>
+      </div>
+
+      <div class="final-message" id="finalMessage">
+        <div class="check-container">
+          <div class="check-circle">✓</div>
+        </div>
+        <div class="final-title">Retour bien transmis</div>
+        <div class="final-text">
+          Merci, votre retour a bien été transmis.<br>
+          Vous pouvez fermer cette fenêtre.<br><br>
+          Distritec vous remercie pour votre confiance.
+        </div>
+      </div>
 
       <div class="footer-note">
         Votre retour aide Distritec à améliorer en continu la qualité de ses prestations.
@@ -239,6 +308,7 @@
   </div>
 
   <script>
+    // Remplace cette URL par TON vrai webhook n8n
     const WEBHOOK_URL = 'https://n8n.srv958954.hstgr.cloud/webhook/a3f09222-6d0f-4668-92e6-7fa0ec62bfff';
 
     const p = new URLSearchParams(window.location.search);
@@ -254,13 +324,12 @@
 
     async function envoyer() {
       const btn = document.getElementById('sendBtn');
-      const ok = document.getElementById('ok');
       const err = document.getElementById('err');
       const commentaire = document.getElementById('commentaire').value.trim();
+      const formBlock = document.getElementById('formBlock');
+      const finalMessage = document.getElementById('finalMessage');
 
-      ok.style.display = 'none';
       err.style.display = 'none';
-
       btn.disabled = true;
       btn.textContent = 'Envoi en cours...';
 
@@ -280,8 +349,8 @@
           throw new Error('Erreur webhook');
         }
 
-        ok.style.display = 'block';
-        btn.textContent = 'Commentaire envoyé';
+        formBlock.classList.add('hidden');
+        finalMessage.style.display = 'block';
       } catch (e) {
         err.style.display = 'block';
         btn.disabled = false;
