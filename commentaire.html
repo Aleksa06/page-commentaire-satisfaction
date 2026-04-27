@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Merci pour votre retour | Distritec</title>
+
   <style>
     :root {
       --brand-primary: #BB2A0A;
@@ -15,11 +16,6 @@
       --border: #e7e2d9;
       --success-bg: #f7ebe7;
       --green: #28a745;
-      --warning-bg: #fff6f3;
-      --warning-border: #f2d4ca;
-      --warning-text: #8f2d17;
-      --star-off: #d7d3cc;
-      --star-on: #f4b400;
     }
 
     * {
@@ -35,7 +31,7 @@
     }
 
     .wrap {
-      max-width: 620px;
+      max-width: 560px;
       margin: 0 auto;
     }
 
@@ -88,22 +84,25 @@
     }
 
     .intro {
-      margin: 0 0 18px 0;
+      margin: 0 0 12px 0;
       color: var(--text-soft);
       font-size: 15px;
       line-height: 1.65;
     }
 
-    .rating-box {
+    .badge {
+      display: inline-block;
       margin-top: 8px;
-      margin-bottom: 22px;
-      padding: 18px 18px 14px;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: #fcfbf9;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: var(--success-bg);
+      color: var(--brand-primary);
+      font-weight: 700;
+      font-size: 14px;
     }
 
     .section-label {
+      margin-top: 26px;
       margin-bottom: 10px;
       font-size: 12px;
       font-weight: 700;
@@ -114,120 +113,68 @@
 
     .stars {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
+      justify-content: center;
+      gap: 8px;
+      margin: 14px 0 8px;
     }
 
-    .star-btn {
-      appearance: none;
+    .star {
       border: none;
       background: transparent;
-      padding: 0;
-      margin: 0;
       cursor: pointer;
       font-size: 38px;
       line-height: 1;
-      color: var(--star-off);
-      transition: transform 0.12s ease, color 0.12s ease, opacity 0.12s ease;
+      color: #d8d3c8;
+      padding: 4px;
+      transition: transform 0.12s ease, color 0.12s ease;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
-    .star-btn:hover {
+    .star:hover {
       transform: scale(1.08);
     }
 
-    .star-btn.active {
-      color: var(--star-on);
+    .star.active {
+      color: var(--brand-primary);
     }
 
-    .rating-text {
+    .note-text {
       min-height: 22px;
+      text-align: center;
       font-size: 14px;
-      font-weight: 600;
-      color: var(--text-soft);
-    }
-
-    .dynamic-block {
-      margin-top: 22px;
-    }
-
-    .dynamic-title {
-      margin: 0 0 10px 0;
-      font-size: 18px;
-      line-height: 1.4;
-      color: var(--text-main);
-    }
-
-    .dynamic-desc {
-      margin: 0 0 14px 0;
-      color: var(--text-soft);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .required-badge {
-      display: inline-block;
-      margin-left: 8px;
-      font-size: 11px;
-      color: var(--warning-text);
-      background: #fdece6;
-      padding: 3px 8px;
-      border-radius: 999px;
-      vertical-align: middle;
-    }
-
-    .field-label {
-      display: block;
-      margin: 16px 0 8px 0;
-      font-size: 13px;
+      color: var(--brand-primary);
       font-weight: 700;
-      color: var(--text-main);
+      margin-bottom: 22px;
     }
 
-    select,
     textarea {
       width: 100%;
+      min-height: 130px;
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 14px 16px;
       font-size: 14px;
       line-height: 1.6;
+      resize: vertical;
       outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
       background: #fcfbf9;
       color: var(--text-main);
       font-family: inherit;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    select:focus,
     textarea:focus {
       border-color: var(--brand-primary);
       box-shadow: 0 0 0 3px rgba(187, 42, 10, 0.10);
-    }
-
-    textarea {
-      min-height: 130px;
-      resize: vertical;
     }
 
     textarea::placeholder {
       color: #9a978f;
     }
 
-    .helper-box {
-      margin-top: 14px;
-      padding: 14px 16px;
-      border-radius: 14px;
-      background: var(--warning-bg);
-      border: 1px solid var(--warning-border);
-      color: var(--warning-text);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    button.primary {
+    button.submit {
       width: 100%;
-      margin-top: 20px;
+      margin-top: 16px;
       padding: 15px 18px;
       border: none;
       border-radius: 14px;
@@ -240,21 +187,22 @@
       font-family: inherit;
     }
 
-    button.primary:hover {
+    button.submit:hover {
       opacity: 0.95;
     }
 
-    button.primary:active {
+    button.submit:active {
       transform: scale(0.995);
     }
 
-    button.primary:disabled {
+    button.submit:disabled {
       opacity: 0.7;
       cursor: not-allowed;
     }
 
     .err,
-    .final-message {
+    .final-message,
+    .review-block {
       display: none;
       margin-top: 16px;
       padding: 14px 16px;
@@ -310,32 +258,36 @@
       color: #3d4b40;
     }
 
-    .review-box {
-      display: none;
-      margin-top: 18px;
-      padding: 18px;
-      border-radius: 16px;
-      background: #fffaf7;
-      border: 1px solid #f0ddd6;
+    .review-block {
+      background: #fff7f4;
+      border: 1px solid #f0d2c8;
+      color: #3d4b40;
       text-align: center;
+      margin-top: 18px;
     }
 
-    .review-box p {
-      margin: 0 0 14px 0;
+    .review-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .review-text {
       font-size: 14px;
       line-height: 1.6;
       color: var(--text-soft);
+      margin-bottom: 14px;
     }
 
-    .review-link {
+    .review-button {
       display: inline-block;
-      text-decoration: none;
       background: var(--brand-primary);
-      color: #fff;
-      padding: 12px 18px;
-      border-radius: 12px;
-      font-size: 14px;
+      color: #ffffff;
+      text-decoration: none;
       font-weight: 700;
+      padding: 13px 18px;
+      border-radius: 12px;
     }
 
     .footer-note {
@@ -347,10 +299,6 @@
 
     #formBlock.hidden {
       display: none;
-    }
-
-    .hidden {
-      display: none !important;
     }
 
     @keyframes pop {
@@ -365,6 +313,10 @@
     }
 
     @media (max-width: 640px) {
+      body {
+        padding: 24px 12px;
+      }
+
       .card {
         padding: 24px 20px;
       }
@@ -377,12 +329,14 @@
         width: 46px;
       }
 
-      .star-btn {
+      .star {
         font-size: 34px;
+        padding: 2px;
       }
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <div class="card">
@@ -397,60 +351,33 @@
         </div>
       </div>
 
-      <h1>Votre retour nous aide à progresser</h1>
-      <p class="intro" id="message">
-        Merci pour votre retour.
+      <h1>Votre avis nous intéresse</h1>
+      <p class="intro">
+        Merci pour votre retour. Votre expérience nous aide à améliorer en continu la qualité de nos prestations.
       </p>
 
       <div id="formBlock">
-        <div class="rating-box">
-          <div class="section-label">Votre note</div>
-          <div class="stars" id="stars">
-            <button type="button" class="star-btn" data-value="1" aria-label="1 étoile">★</button>
-            <button type="button" class="star-btn" data-value="2" aria-label="2 étoiles">★</button>
-            <button type="button" class="star-btn" data-value="3" aria-label="3 étoiles">★</button>
-            <button type="button" class="star-btn" data-value="4" aria-label="4 étoiles">★</button>
-            <button type="button" class="star-btn" data-value="5" aria-label="5 étoiles">★</button>
-          </div>
-          <div class="rating-text" id="ratingText">Sélectionnez une note.</div>
+        <div class="section-label">Votre note</div>
+
+        <div class="stars">
+          <button class="star" type="button" onclick="selectNote(1)">★</button>
+          <button class="star" type="button" onclick="selectNote(2)">★</button>
+          <button class="star" type="button" onclick="selectNote(3)">★</button>
+          <button class="star" type="button" onclick="selectNote(4)">★</button>
+          <button class="star" type="button" onclick="selectNote(5)">★</button>
         </div>
 
-        <div class="dynamic-block">
-          <h2 class="dynamic-title" id="dynamicTitle">Un commentaire complémentaire ?</h2>
-          <p class="dynamic-desc" id="dynamicDesc">
-            Votre retour nous aide à améliorer en continu la qualité de nos prestations.
-          </p>
+        <div class="note-text" id="noteText">Sélectionnez une note sur 5</div>
 
-          <div id="lowRatingBlock" class="hidden">
-            <label class="field-label" for="reasonSelect">
-              Motif principal
-              <span class="required-badge">Obligatoire</span>
-            </label>
-            <select id="reasonSelect">
-              <option value="">Sélectionnez une raison</option>
-              <option value="Rendez-vous / planification">Rendez-vous / planification</option>
-              <option value="Prestation non réalisée ou partielle">Prestation non réalisée ou partielle</option>
-              <option value="Litige / Avarie">Litige / Avarie</option>
-              <option value="Comportement de notre conducteur">Comportement de notre conducteur</option>
-              <option value="Problème ne concerne pas Distritec">Problème ne concerne pas Distritec</option>
-              <option value="Autres">Autres</option>
-            </select>
+        <div class="section-label">Un commentaire complémentaire ?</div>
+        <textarea
+          id="commentaire"
+          placeholder="Dites-nous en quelques mots comment s'est passée votre prestation..."
+        ></textarea>
 
-            <div class="helper-box">
-              Merci de nous préciser ce qui n’allait pas et ce qui pourrait être amélioré.
-            </div>
-          </div>
-
-          <label class="field-label" for="commentaire" id="commentLabel">
-            Votre commentaire
-          </label>
-          <textarea
-            id="commentaire"
-            placeholder="Dites-nous quelques mots sur votre expérience..."
-          ></textarea>
-        </div>
-
-        <button class="primary" id="sendBtn" onclick="envoyer()">Envoyer mon retour</button>
+        <button class="submit" id="sendBtn" onclick="envoyer()" disabled>
+          Envoyer mon retour
+        </button>
 
         <div class="err" id="err">
           Une erreur est survenue. Merci de réessayer.
@@ -462,21 +389,21 @@
           <div class="check-circle">✓</div>
         </div>
         <div class="final-title">Retour bien transmis</div>
-        <div class="final-text" id="finalText">
+        <div class="final-text">
           Merci, votre retour a bien été transmis.<br>
           Vous pouvez fermer cette fenêtre.<br><br>
           Distritec vous remercie pour votre confiance.
         </div>
+      </div>
 
-        <div class="review-box" id="reviewBox">
-          <p>
-            Merci beaucoup pour votre excellente note.<br>
-            Si vous le souhaitez, vous pouvez également laisser un avis sur notre agence.
-          </p>
-          <a class="review-link" id="reviewLink" href="#" target="_blank" rel="noopener noreferrer">
-            Laisser un avis sur notre agence
-          </a>
+      <div class="review-block" id="reviewBlock">
+        <div class="review-title">Votre satisfaction compte beaucoup pour nous</div>
+        <div class="review-text">
+          Si vous le souhaitez, vous pouvez également partager votre expérience sur notre page Google.
         </div>
+        <a id="reviewButton" class="review-button" href="#" target="_blank" rel="noopener noreferrer">
+          Laisser un avis Google
+        </a>
       </div>
 
       <div class="footer-note">
@@ -489,143 +416,68 @@
     const WEBHOOK_URL = 'https://n8n.srv958954.hstgr.cloud/webhook/a3f09222-6d0f-4668-92e6-7fa0ec62bfff';
 
     const p = new URLSearchParams(window.location.search);
-    const call_id = p.get('call_id') || '';
-    const initialNote = Number(p.get('note') || '0');
-    const name = p.get('name') || '';
-    const agency = p.get('agency') || '';
-    const review_url = p.get('review_url') || '';
+    const token = p.get('t') || '';
 
-    let selectedRating = initialNote;
+    let selectedNote = 0;
 
-    const message = document.getElementById('message');
-    const ratingText = document.getElementById('ratingText');
-    const stars = Array.from(document.querySelectorAll('.star-btn'));
-    const dynamicTitle = document.getElementById('dynamicTitle');
-    const dynamicDesc = document.getElementById('dynamicDesc');
-    const lowRatingBlock = document.getElementById('lowRatingBlock');
-    const reasonSelect = document.getElementById('reasonSelect');
-    const commentLabel = document.getElementById('commentLabel');
-    const commentaire = document.getElementById('commentaire');
-    const err = document.getElementById('err');
-    const sendBtn = document.getElementById('sendBtn');
-    const formBlock = document.getElementById('formBlock');
-    const finalMessage = document.getElementById('finalMessage');
-    const finalText = document.getElementById('finalText');
-    const reviewBox = document.getElementById('reviewBox');
-    const reviewLink = document.getElementById('reviewLink');
-
-    const ratingLabels = {
-      1: 'Très insatisfait',
-      2: 'Insatisfait',
-      3: 'Mitigé',
-      4: 'Satisfait',
-      5: 'Très satisfait'
+    const labels = {
+      1: '1/5 — Très insatisfait',
+      2: '2/5 — Insatisfait',
+      3: '3/5 — Correct',
+      4: '4/5 — Satisfait',
+      5: '5/5 — Très satisfait'
     };
 
-    function updateStars(rating) {
+    function selectNote(note) {
+      selectedNote = note;
+
+      const stars = document.querySelectorAll('.star');
+
       stars.forEach((star, index) => {
-        const starValue = index + 1;
-        star.classList.toggle('active', starValue <= rating);
+        if (index < note) {
+          star.classList.add('active');
+        } else {
+          star.classList.remove('active');
+        }
       });
+
+      document.getElementById('noteText').textContent = labels[note];
+      document.getElementById('sendBtn').disabled = false;
     }
-
-    function updateDynamicUI() {
-      updateStars(selectedRating);
-
-      if (selectedRating > 0) {
-        ratingText.textContent = `${selectedRating}/5 — ${ratingLabels[selectedRating]}`;
-      } else {
-        ratingText.textContent = 'Sélectionnez une note.';
-      }
-
-      if (selectedRating >= 4) {
-        dynamicTitle.textContent = 'Un commentaire complémentaire ?';
-        dynamicDesc.textContent = 'Votre retour nous aide à améliorer en continu la qualité de nos prestations.';
-        lowRatingBlock.classList.add('hidden');
-        commentLabel.innerHTML = 'Votre commentaire';
-        commentaire.placeholder = 'Dites-nous quelques mots sur votre expérience...';
-      } else if (selectedRating >= 1 && selectedRating <= 3) {
-        dynamicTitle.textContent = 'Pour quelle raison n’êtes-vous pas totalement satisfait ?';
-        dynamicDesc.textContent = 'Votre retour est important pour nous permettre d’identifier précisément ce qui n’a pas répondu à vos attentes.';
-        lowRatingBlock.classList.remove('hidden');
-        commentLabel.innerHTML = 'Votre commentaire <span class="required-badge">Obligatoire</span>';
-        commentaire.placeholder = 'Décrivez-nous ce qui n’allait pas et ce qui pourrait être amélioré...';
-      } else {
-        dynamicTitle.textContent = 'Un commentaire complémentaire ?';
-        dynamicDesc.textContent = 'Votre retour nous aide à améliorer en continu la qualité de nos prestations.';
-        lowRatingBlock.classList.add('hidden');
-        commentLabel.innerHTML = 'Votre commentaire';
-        commentaire.placeholder = 'Dites-nous quelques mots sur votre expérience...';
-      }
-    }
-
-    function showFinalScreen() {
-      formBlock.classList.add('hidden');
-      finalMessage.style.display = 'block';
-
-      if (selectedRating === 5 && review_url) {
-        reviewLink.href = review_url;
-        reviewBox.style.display = 'block';
-        finalText.innerHTML =
-          'Merci, votre retour a bien été transmis.<br>' +
-          'Vous pouvez fermer cette fenêtre.<br><br>' +
-          'Distritec vous remercie pour votre confiance.';
-      } else {
-        reviewBox.style.display = 'none';
-        finalText.innerHTML =
-          'Merci, votre retour a bien été transmis.<br>' +
-          'Vous pouvez fermer cette fenêtre.<br><br>' +
-          'Distritec vous remercie pour votre confiance.';
-      }
-    }
-
-    stars.forEach((star) => {
-      star.addEventListener('click', () => {
-        selectedRating = Number(star.dataset.value);
-        updateDynamicUI();
-      });
-    });
 
     async function envoyer() {
-      const commentValue = commentaire.value.trim();
-      const reasonValue = reasonSelect.value.trim();
+      const btn = document.getElementById('sendBtn');
+      const err = document.getElementById('err');
+      const commentaire = document.getElementById('commentaire').value.trim();
+      const formBlock = document.getElementById('formBlock');
+      const finalMessage = document.getElementById('finalMessage');
+      const reviewBlock = document.getElementById('reviewBlock');
+      const reviewButton = document.getElementById('reviewButton');
 
-      err.style.display = 'none';
-
-      if (!selectedRating || selectedRating < 1 || selectedRating > 5) {
-        err.textContent = 'Merci de sélectionner une note avant d’envoyer votre retour.';
+      if (!token) {
+        err.textContent = "Lien invalide. Merci de contacter Distritec.";
         err.style.display = 'block';
         return;
       }
 
-      if (selectedRating <= 3) {
-        if (!reasonValue) {
-          err.textContent = 'Merci de sélectionner le motif principal de votre insatisfaction.';
-          err.style.display = 'block';
-          return;
-        }
-
-        if (!commentValue) {
-          err.textContent = 'Merci de préciser ce qui n’allait pas et ce qui pourrait être amélioré.';
-          err.style.display = 'block';
-          return;
-        }
+      if (!selectedNote) {
+        err.textContent = "Merci de sélectionner une note avant d'envoyer.";
+        err.style.display = 'block';
+        return;
       }
 
-      sendBtn.disabled = true;
-      sendBtn.textContent = 'Envoi en cours...';
+      err.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Envoi en cours...';
 
       try {
         const res = await fetch(WEBHOOK_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            call_id,
-            note: selectedRating,
-            commentaire: commentValue,
-            motif_insatisfaction: selectedRating <= 3 ? reasonValue : '',
-            agency,
-            review_url,
+            token: token,
+            note: selectedNote,
+            commentaire: commentaire,
             date: new Date().toISOString()
           })
         });
@@ -634,18 +486,29 @@
           throw new Error('Erreur webhook');
         }
 
-        showFinalScreen();
+        let data = {};
+
+        try {
+          data = await res.json();
+        } catch (e) {
+          data = {};
+        }
+
+        formBlock.classList.add('hidden');
+        finalMessage.style.display = 'block';
+
+        if (data.show_review === true && data.review_url) {
+          reviewButton.href = data.review_url;
+          reviewBlock.style.display = 'block';
+        }
+
       } catch (e) {
-        err.textContent = 'Une erreur est survenue. Merci de réessayer.';
+        err.textContent = "Une erreur est survenue. Merci de réessayer.";
         err.style.display = 'block';
-        sendBtn.disabled = false;
-        sendBtn.textContent = 'Envoyer mon retour';
+        btn.disabled = false;
+        btn.textContent = 'Envoyer mon retour';
       }
     }
-
-    message.textContent = `Bonjour${name ? ' ' + name : ''}, nous vous remercions de prendre quelques instants pour partager votre expérience.`;
-
-    updateDynamicUI();
   </script>
 </body>
 </html>
