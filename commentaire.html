@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Merci pour votre retour | Distritec</title>
-
   <style>
     :root {
       --brand-primary: #BB2A0A;
@@ -16,6 +15,11 @@
       --border: #e7e2d9;
       --success-bg: #f7ebe7;
       --green: #28a745;
+      --warning-bg: #fff6f3;
+      --warning-border: #f2d4ca;
+      --warning-text: #8f2d17;
+      --star-off: #d7d3cc;
+      --star-on: #BB2A0A;
     }
 
     * { box-sizing: border-box; }
@@ -29,7 +33,7 @@
     }
 
     .wrap {
-      max-width: 560px;
+      max-width: 620px;
       margin: 0 auto;
     }
 
@@ -82,14 +86,22 @@
     }
 
     .intro {
-      margin: 0 0 12px 0;
+      margin: 0 0 18px 0;
       color: var(--text-soft);
       font-size: 15px;
       line-height: 1.65;
     }
 
+    .rating-box {
+      margin-top: 8px;
+      margin-bottom: 22px;
+      padding: 18px 18px 14px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fcfbf9;
+    }
+
     .section-label {
-      margin-top: 26px;
       margin-bottom: 10px;
       font-size: 12px;
       font-weight: 700;
@@ -100,89 +112,120 @@
 
     .stars {
       display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin: 14px 0 8px;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
     }
 
-    .star {
+    .star-btn {
+      appearance: none;
       border: none;
       background: transparent;
+      padding: 0;
+      margin: 0;
       cursor: pointer;
       font-size: 38px;
       line-height: 1;
-      color: #d8d3c8;
-      padding: 4px;
-      transition: transform 0.12s ease, color 0.12s ease;
-      font-family: Arial, Helvetica, sans-serif;
+      color: var(--star-off);
+      transition: transform 0.12s ease, color 0.12s ease, opacity 0.12s ease;
     }
 
-    .star:hover { transform: scale(1.08); }
-    .star.active { color: var(--brand-primary); }
+    .star-btn:hover {
+      transform: scale(1.08);
+    }
 
-    .note-text {
+    .star-btn.active {
+      color: var(--star-on);
+    }
+
+    .rating-text {
       min-height: 22px;
-      text-align: center;
       font-size: 14px;
-      color: var(--brand-primary);
-      font-weight: 700;
-      margin-bottom: 22px;
+      font-weight: 600;
+      color: var(--text-soft);
     }
 
-    .motif-block {
-      display: none;
+    .dynamic-block {
       margin-top: 22px;
     }
 
-    .motif-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-
-    .motif-option {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 14px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: #fcfbf9;
-      cursor: pointer;
-      font-size: 14px;
+    .dynamic-title {
+      margin: 0 0 10px 0;
+      font-size: 18px;
+      line-height: 1.4;
       color: var(--text-main);
     }
 
-    .motif-option input {
-      margin: 0;
+    .dynamic-desc {
+      margin: 0 0 14px 0;
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.6;
     }
 
+    .required-badge {
+      display: inline-block;
+      margin-left: 8px;
+      font-size: 11px;
+      color: var(--warning-text);
+      background: #fdece6;
+      padding: 3px 8px;
+      border-radius: 999px;
+      vertical-align: middle;
+    }
+
+    .field-label {
+      display: block;
+      margin: 16px 0 8px 0;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    select,
     textarea {
       width: 100%;
-      min-height: 130px;
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 14px 16px;
       font-size: 14px;
       line-height: 1.6;
-      resize: vertical;
       outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
       background: #fcfbf9;
       color: var(--text-main);
       font-family: inherit;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
+    select:focus,
     textarea:focus {
       border-color: var(--brand-primary);
       box-shadow: 0 0 0 3px rgba(187, 42, 10, 0.10);
     }
 
-    textarea::placeholder { color: #9a978f; }
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
 
-    button.submit {
+    textarea::placeholder {
+      color: #9a978f;
+    }
+
+    .helper-box {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      color: var(--warning-text);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    button.primary {
       width: 100%;
-      margin-top: 16px;
+      margin-top: 20px;
       padding: 15px 18px;
       border: none;
       border-radius: 14px;
@@ -195,11 +238,21 @@
       font-family: inherit;
     }
 
-    button.submit:hover { opacity: 0.95; }
-    button.submit:active { transform: scale(0.995); }
-    button.submit:disabled { opacity: 0.7; cursor: not-allowed; }
+    button.primary:hover {
+      opacity: 0.95;
+    }
 
-    .err, .final-message, .review-block {
+    button.primary:active {
+      transform: scale(0.995);
+    }
+
+    button.primary:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .err,
+    .final-message {
       display: none;
       margin-top: 16px;
       padding: 14px 16px;
@@ -255,36 +308,32 @@
       color: #3d4b40;
     }
 
-    .review-block {
-      background: #fff7f4;
-      border: 1px solid #f0d2c8;
-      color: #3d4b40;
-      text-align: center;
+    .review-box {
+      display: none;
       margin-top: 18px;
+      padding: 18px;
+      border-radius: 16px;
+      background: #fffaf7;
+      border: 1px solid #f0ddd6;
+      text-align: center;
     }
 
-    .review-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 8px;
-    }
-
-    .review-text {
+    .review-box p {
+      margin: 0 0 14px 0;
       font-size: 14px;
       line-height: 1.6;
       color: var(--text-soft);
-      margin-bottom: 14px;
     }
 
-    .review-button {
+    .review-link {
       display: inline-block;
-      background: var(--brand-primary);
-      color: #ffffff;
       text-decoration: none;
-      font-weight: 700;
-      padding: 13px 18px;
+      background: var(--brand-primary);
+      color: #fff;
+      padding: 12px 18px;
       border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
     }
 
     .footer-note {
@@ -294,19 +343,41 @@
       line-height: 1.5;
     }
 
-    #formBlock.hidden { display: none; }
+    #formBlock.hidden {
+      display: none;
+    }
+
+    .hidden {
+      display: none !important;
+    }
 
     @keyframes pop {
-      0% { transform: scale(0.65); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
+      0% {
+        transform: scale(0.65);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
 
     @media (max-width: 640px) {
-      body { padding: 24px 12px; }
-      .card { padding: 24px 20px; }
-      h1 { font-size: 24px; }
-      .brand-row img { width: 46px; }
-      .star { font-size: 34px; padding: 2px; }
+      .card {
+        padding: 24px 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .brand-row img {
+        width: 46px;
+      }
+
+      .star-btn {
+        font-size: 34px;
+      }
     }
   </style>
 </head>
@@ -315,71 +386,70 @@
   <div class="wrap">
     <div class="card">
       <div class="brand-row">
-        <img src="https://www.dgroupe.fr/wp-content/uploads/2025/11/683614629ea4783e47c646ca_D-Groupe-logo-p-500.png" alt="Logo Distritec" />
+        <img
+          src="https://www.dgroupe.fr/wp-content/uploads/2025/11/683614629ea4783e47c646ca_D-Groupe-logo-p-500.png"
+          alt="Logo Distritec"
+        />
         <div class="brand-text">
           <div class="brand-name">Distritec</div>
           <div class="brand-sub">Solutions Supply Chain</div>
         </div>
       </div>
 
-      <h1>Votre avis nous intéresse</h1>
-      <p class="intro">
-        Merci pour votre retour. Votre expérience nous aide à améliorer en continu la qualité de nos prestations.
+      <h1>Votre retour nous aide à progresser</h1>
+      <p class="intro" id="message">
+        Merci pour votre retour.
       </p>
 
       <div id="formBlock">
-        <div class="section-label">Votre note</div>
-
-        <div class="stars">
-          <button class="star" type="button" onclick="selectNote(1)">★</button>
-          <button class="star" type="button" onclick="selectNote(2)">★</button>
-          <button class="star" type="button" onclick="selectNote(3)">★</button>
-          <button class="star" type="button" onclick="selectNote(4)">★</button>
-          <button class="star" type="button" onclick="selectNote(5)">★</button>
-        </div>
-
-        <div class="note-text" id="noteText">Sélectionnez une note sur 5</div>
-
-        <div class="motif-block" id="motifBlock">
-          <div class="section-label">Motif d’insatisfaction obligatoire</div>
-
-          <div class="motif-grid">
-            <label class="motif-option">
-              <input type="radio" name="motif" value="Retard ou créneau non respecté">
-              Retard ou créneau non respecté
-            </label>
-
-            <label class="motif-option">
-              <input type="radio" name="motif" value="Communication insuffisante">
-              Communication insuffisante
-            </label>
-
-            <label class="motif-option">
-              <input type="radio" name="motif" value="Problème avec le livreur ou l’intervention">
-              Problème avec le livreur ou l’intervention
-            </label>
-
-            <label class="motif-option">
-              <input type="radio" name="motif" value="Produit abîmé ou prestation incomplète">
-              Produit abîmé ou prestation incomplète
-            </label>
-
-            <label class="motif-option">
-              <input type="radio" name="motif" value="Autre">
-              Autre
-            </label>
+        <div class="rating-box">
+          <div class="section-label">Votre note</div>
+          <div class="stars" id="stars">
+            <button type="button" class="star-btn" data-value="1" aria-label="1 étoile">★</button>
+            <button type="button" class="star-btn" data-value="2" aria-label="2 étoiles">★</button>
+            <button type="button" class="star-btn" data-value="3" aria-label="3 étoiles">★</button>
+            <button type="button" class="star-btn" data-value="4" aria-label="4 étoiles">★</button>
+            <button type="button" class="star-btn" data-value="5" aria-label="5 étoiles">★</button>
           </div>
+          <div class="rating-text" id="ratingText">Sélectionnez une note.</div>
         </div>
 
-        <div class="section-label" id="commentLabel">Un commentaire complémentaire ?</div>
-        <textarea
-          id="commentaire"
-          placeholder="Dites-nous en quelques mots comment s'est passée votre prestation..."
-        ></textarea>
+        <div class="dynamic-block">
+          <h2 class="dynamic-title" id="dynamicTitle">Un commentaire complémentaire ?</h2>
+          <p class="dynamic-desc" id="dynamicDesc">
+            Votre retour nous aide à améliorer en continu la qualité de nos prestations.
+          </p>
 
-        <button class="submit" id="sendBtn" onclick="envoyer()" disabled>
-          Envoyer mon retour
-        </button>
+          <div id="lowRatingBlock" class="hidden">
+            <label class="field-label" for="reasonSelect">
+              Motif principal
+              <span class="required-badge">Obligatoire</span>
+            </label>
+            <select id="reasonSelect">
+              <option value="">Sélectionnez une raison</option>
+              <option value="Rendez-vous / planification">Rendez-vous / planification</option>
+              <option value="Prestation non réalisée ou partielle">Prestation non réalisée ou partielle</option>
+              <option value="Litige / Avarie">Litige / Avarie</option>
+              <option value="Comportement de notre conducteur">Comportement de notre conducteur</option>
+              <option value="Problème ne concerne pas Distritec">Problème ne concerne pas Distritec</option>
+              <option value="Autres">Autres</option>
+            </select>
+
+            <div class="helper-box">
+              Merci de nous préciser ce qui n’allait pas et ce qui pourrait être amélioré.
+            </div>
+          </div>
+
+          <label class="field-label" for="commentaire" id="commentLabel">
+            Votre commentaire
+          </label>
+          <textarea
+            id="commentaire"
+            placeholder="Dites-nous quelques mots sur votre expérience..."
+          ></textarea>
+        </div>
+
+        <button class="primary" id="sendBtn" onclick="envoyer()">Envoyer mon retour</button>
 
         <div class="err" id="err">
           Une erreur est survenue. Merci de réessayer.
@@ -391,21 +461,21 @@
           <div class="check-circle">✓</div>
         </div>
         <div class="final-title">Retour bien transmis</div>
-        <div class="final-text">
+        <div class="final-text" id="finalText">
           Merci, votre retour a bien été transmis.<br>
           Vous pouvez fermer cette fenêtre.<br><br>
           Distritec vous remercie pour votre confiance.
         </div>
-      </div>
 
-      <div class="review-block" id="reviewBlock">
-        <div class="review-title">Votre satisfaction compte beaucoup pour nous</div>
-        <div class="review-text">
-          Si vous le souhaitez, vous pouvez également partager votre expérience sur notre page Google.
+        <div class="review-box" id="reviewBox">
+          <p>
+            Merci beaucoup pour votre excellente note.<br>
+            Si vous le souhaitez, vous pouvez également laisser un avis sur notre agence.
+          </p>
+          <a class="review-link" id="reviewLink" href="#" target="_blank" rel="noopener noreferrer">
+            Laisser un avis sur notre agence
+          </a>
         </div>
-        <a id="reviewButton" class="review-button" href="#" target="_blank" rel="noopener noreferrer">
-          Laisser un avis Google
-        </a>
       </div>
 
       <div class="footer-note">
@@ -419,136 +489,169 @@
 
     const p = new URLSearchParams(window.location.search);
     const token = p.get('t') || '';
-    const noteInitiale = parseInt(p.get('note') || '0', 10);
+    const initialNote = Number(p.get('note') || '0');
 
-    let selectedNote = 0;
+    let selectedRating = initialNote;
 
-    const labels = {
-      1: '1/5 — Très insatisfait',
-      2: '2/5 — Insatisfait',
-      3: '3/5 — Correct',
-      4: '4/5 — Satisfait',
-      5: '5/5 — Très satisfait'
+    const message = document.getElementById('message');
+    const ratingText = document.getElementById('ratingText');
+    const stars = Array.from(document.querySelectorAll('.star-btn'));
+    const dynamicTitle = document.getElementById('dynamicTitle');
+    const dynamicDesc = document.getElementById('dynamicDesc');
+    const lowRatingBlock = document.getElementById('lowRatingBlock');
+    const reasonSelect = document.getElementById('reasonSelect');
+    const commentLabel = document.getElementById('commentLabel');
+    const commentaire = document.getElementById('commentaire');
+    const err = document.getElementById('err');
+    const sendBtn = document.getElementById('sendBtn');
+    const formBlock = document.getElementById('formBlock');
+    const finalMessage = document.getElementById('finalMessage');
+    const finalText = document.getElementById('finalText');
+    const reviewBox = document.getElementById('reviewBox');
+    const reviewLink = document.getElementById('reviewLink');
+
+    const ratingLabels = {
+      1: 'Très insatisfait',
+      2: 'Insatisfait',
+      3: 'Mitigé',
+      4: 'Satisfait',
+      5: 'Très satisfait'
     };
 
-    function selectNote(note) {
-      selectedNote = note;
-
-      const stars = document.querySelectorAll('.star');
+    function updateStars(rating) {
       stars.forEach((star, index) => {
-        if (index < note) {
-          star.classList.add('active');
-        } else {
-          star.classList.remove('active');
-        }
+        const starValue = index + 1;
+        star.classList.toggle('active', starValue <= rating);
       });
+    }
 
-      document.getElementById('noteText').textContent = labels[note];
-      document.getElementById('sendBtn').disabled = false;
+    function updateDynamicUI() {
+      updateStars(selectedRating);
 
-      const motifBlock = document.getElementById('motifBlock');
-      const commentLabel = document.getElementById('commentLabel');
-      const commentaire = document.getElementById('commentaire');
-
-      if (note <= 3) {
-        motifBlock.style.display = 'block';
-        commentLabel.textContent = 'Commentaire obligatoire';
-        commentaire.placeholder = "Merci de préciser ce qui n'a pas répondu à vos attentes...";
+      if (selectedRating > 0) {
+        ratingText.textContent = `${selectedRating}/5 — ${ratingLabels[selectedRating]}`;
       } else {
-        motifBlock.style.display = 'none';
-        commentLabel.textContent = 'Un commentaire complémentaire ?';
-        commentaire.placeholder = "Dites-nous en quelques mots comment s'est passée votre prestation...";
+        ratingText.textContent = 'Sélectionnez une note.';
+      }
 
-        const checkedMotif = document.querySelector('input[name="motif"]:checked');
-        if (checkedMotif) checkedMotif.checked = false;
+      if (selectedRating >= 4) {
+        dynamicTitle.textContent = 'Un commentaire complémentaire ?';
+        dynamicDesc.textContent = 'Votre retour nous aide à améliorer en continu la qualité de nos prestations.';
+        lowRatingBlock.classList.add('hidden');
+        commentLabel.innerHTML = 'Votre commentaire';
+        commentaire.placeholder = 'Dites-nous quelques mots sur votre expérience...';
+      } else if (selectedRating >= 1 && selectedRating <= 3) {
+        dynamicTitle.textContent = 'Pour quelle raison n’êtes-vous pas totalement satisfait ?';
+        dynamicDesc.textContent = 'Votre retour est important pour nous permettre d’identifier précisément ce qui n’a pas répondu à vos attentes.';
+        lowRatingBlock.classList.remove('hidden');
+        commentLabel.innerHTML = 'Votre commentaire <span class="required-badge">Obligatoire</span>';
+        commentaire.placeholder = 'Décrivez-nous ce qui n’allait pas et ce qui pourrait être amélioré...';
+      } else {
+        dynamicTitle.textContent = 'Un commentaire complémentaire ?';
+        dynamicDesc.textContent = 'Votre retour nous aide à améliorer en continu la qualité de nos prestations.';
+        lowRatingBlock.classList.add('hidden');
+        commentLabel.innerHTML = 'Votre commentaire';
+        commentaire.placeholder = 'Dites-nous quelques mots sur votre expérience...';
       }
     }
 
-    function getSelectedMotif() {
-      const checked = document.querySelector('input[name="motif"]:checked');
-      return checked ? checked.value : '';
+    function showFinalScreen(data) {
+      formBlock.classList.add('hidden');
+      finalMessage.style.display = 'block';
+
+      finalText.innerHTML =
+        'Merci, votre retour a bien été transmis.<br>' +
+        'Vous pouvez fermer cette fenêtre.<br><br>' +
+        'Distritec vous remercie pour votre confiance.';
+
+      if (data && data.show_review === true && data.review_url) {
+        reviewLink.href = data.review_url;
+        reviewBox.style.display = 'block';
+      } else {
+        reviewBox.style.display = 'none';
+      }
     }
+
+    stars.forEach((star) => {
+      star.addEventListener('click', () => {
+        selectedRating = Number(star.dataset.value);
+        updateDynamicUI();
+      });
+    });
 
     async function envoyer() {
-      const btn = document.getElementById('sendBtn');
-      const err = document.getElementById('err');
-      const commentaire = document.getElementById('commentaire').value.trim();
-      const motif = getSelectedMotif();
-      const formBlock = document.getElementById('formBlock');
-      const finalMessage = document.getElementById('finalMessage');
-      const reviewBlock = document.getElementById('reviewBlock');
-      const reviewButton = document.getElementById('reviewButton');
-
-      if (!token) {
-        err.textContent = "Lien invalide. Merci de contacter Distritec.";
-        err.style.display = 'block';
-        return;
-      }
-
-      if (!selectedNote) {
-        err.textContent = "Merci de sélectionner une note avant d'envoyer.";
-        err.style.display = 'block';
-        return;
-      }
-
-      if (selectedNote <= 3 && !motif) {
-        err.textContent = "Merci de sélectionner un motif d’insatisfaction.";
-        err.style.display = 'block';
-        return;
-      }
-
-      if (selectedNote <= 3 && commentaire.length < 3) {
-        err.textContent = "Merci de laisser un commentaire pour nous aider à comprendre la situation.";
-        err.style.display = 'block';
-        return;
-      }
+      const commentValue = commentaire.value.trim();
+      const reasonValue = reasonSelect.value.trim();
 
       err.style.display = 'none';
-      btn.disabled = true;
-      btn.textContent = 'Envoi en cours...';
+
+      if (!token) {
+        err.textContent = 'Lien invalide. Merci de contacter Distritec.';
+        err.style.display = 'block';
+        return;
+      }
+
+      if (!selectedRating || selectedRating < 1 || selectedRating > 5) {
+        err.textContent = 'Merci de sélectionner une note avant d’envoyer votre retour.';
+        err.style.display = 'block';
+        return;
+      }
+
+      if (selectedRating <= 3) {
+        if (!reasonValue) {
+          err.textContent = 'Merci de sélectionner le motif principal de votre insatisfaction.';
+          err.style.display = 'block';
+          return;
+        }
+
+        if (!commentValue) {
+          err.textContent = 'Merci de préciser ce qui n’allait pas et ce qui pourrait être amélioré.';
+          err.style.display = 'block';
+          return;
+        }
+      }
+
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Envoi en cours...';
 
       try {
         const res = await fetch(WEBHOOK_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            token: token,
-            note: selectedNote,
-            note_initiale: noteInitiale || '',
-            commentaire: commentaire,
-            motif_insatisfaction: selectedNote <= 3 ? motif : '',
+            token,
+            note: selectedRating,
+            note_initiale: initialNote || '',
+            commentaire: commentValue,
+            motif_insatisfaction: selectedRating <= 3 ? reasonValue : '',
             date: new Date().toISOString()
           })
         });
 
-        if (!res.ok) throw new Error('Erreur webhook');
+        if (!res.ok) {
+          throw new Error('Erreur webhook');
+        }
 
         let data = {};
+
         try {
           data = await res.json();
         } catch (e) {
           data = {};
         }
 
-        formBlock.classList.add('hidden');
-        finalMessage.style.display = 'block';
-
-        if (data.show_review === true && data.review_url) {
-          reviewButton.href = data.review_url;
-          reviewBlock.style.display = 'block';
-        }
-
+        showFinalScreen(data);
       } catch (e) {
-        err.textContent = "Une erreur est survenue. Merci de réessayer.";
+        err.textContent = 'Une erreur est survenue. Merci de réessayer.';
         err.style.display = 'block';
-        btn.disabled = false;
-        btn.textContent = 'Envoyer mon retour';
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Envoyer mon retour';
       }
     }
 
-    if (noteInitiale >= 1 && noteInitiale <= 5) {
-      selectNote(noteInitiale);
-    }
+    message.textContent = 'Merci de prendre quelques instants pour partager votre expérience.';
+
+    updateDynamicUI();
   </script>
 </body>
 </html>
