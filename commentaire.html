@@ -489,7 +489,10 @@
 
     const p = new URLSearchParams(window.location.search);
     const token = p.get('t') || '';
-    const initialNote = Number(p.get('note') || '0');
+    const rawRating = p.get('r') || '';
+const initialNote = rawRating.startsWith('x')
+  ? Number(rawRating.replace('x', ''))
+  : 0;
 
     let selectedRating = initialNote;
 
