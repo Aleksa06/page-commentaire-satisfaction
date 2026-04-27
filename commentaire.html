@@ -18,9 +18,7 @@
       --green: #28a745;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -90,17 +88,6 @@
       line-height: 1.65;
     }
 
-    .badge {
-      display: inline-block;
-      margin-top: 8px;
-      padding: 7px 14px;
-      border-radius: 999px;
-      background: var(--success-bg);
-      color: var(--brand-primary);
-      font-weight: 700;
-      font-size: 14px;
-    }
-
     .section-label {
       margin-top: 26px;
       margin-bottom: 10px;
@@ -130,13 +117,8 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
-    .star:hover {
-      transform: scale(1.08);
-    }
-
-    .star.active {
-      color: var(--brand-primary);
-    }
+    .star:hover { transform: scale(1.08); }
+    .star.active { color: var(--brand-primary); }
 
     .note-text {
       min-height: 22px;
@@ -145,6 +127,34 @@
       color: var(--brand-primary);
       font-weight: 700;
       margin-bottom: 22px;
+    }
+
+    .motif-block {
+      display: none;
+      margin-top: 22px;
+    }
+
+    .motif-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .motif-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fcfbf9;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text-main);
+    }
+
+    .motif-option input {
+      margin: 0;
     }
 
     textarea {
@@ -168,9 +178,7 @@
       box-shadow: 0 0 0 3px rgba(187, 42, 10, 0.10);
     }
 
-    textarea::placeholder {
-      color: #9a978f;
-    }
+    textarea::placeholder { color: #9a978f; }
 
     button.submit {
       width: 100%;
@@ -187,22 +195,11 @@
       font-family: inherit;
     }
 
-    button.submit:hover {
-      opacity: 0.95;
-    }
+    button.submit:hover { opacity: 0.95; }
+    button.submit:active { transform: scale(0.995); }
+    button.submit:disabled { opacity: 0.7; cursor: not-allowed; }
 
-    button.submit:active {
-      transform: scale(0.995);
-    }
-
-    button.submit:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-    }
-
-    .err,
-    .final-message,
-    .review-block {
+    .err, .final-message, .review-block {
       display: none;
       margin-top: 16px;
       padding: 14px 16px;
@@ -297,42 +294,19 @@
       line-height: 1.5;
     }
 
-    #formBlock.hidden {
-      display: none;
-    }
+    #formBlock.hidden { display: none; }
 
     @keyframes pop {
-      0% {
-        transform: scale(0.65);
-        opacity: 0;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
+      0% { transform: scale(0.65); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     @media (max-width: 640px) {
-      body {
-        padding: 24px 12px;
-      }
-
-      .card {
-        padding: 24px 20px;
-      }
-
-      h1 {
-        font-size: 24px;
-      }
-
-      .brand-row img {
-        width: 46px;
-      }
-
-      .star {
-        font-size: 34px;
-        padding: 2px;
-      }
+      body { padding: 24px 12px; }
+      .card { padding: 24px 20px; }
+      h1 { font-size: 24px; }
+      .brand-row img { width: 46px; }
+      .star { font-size: 34px; padding: 2px; }
     }
   </style>
 </head>
@@ -341,10 +315,7 @@
   <div class="wrap">
     <div class="card">
       <div class="brand-row">
-        <img
-          src="https://www.dgroupe.fr/wp-content/uploads/2025/11/683614629ea4783e47c646ca_D-Groupe-logo-p-500.png"
-          alt="Logo Distritec"
-        />
+        <img src="https://www.dgroupe.fr/wp-content/uploads/2025/11/683614629ea4783e47c646ca_D-Groupe-logo-p-500.png" alt="Logo Distritec" />
         <div class="brand-text">
           <div class="brand-name">Distritec</div>
           <div class="brand-sub">Solutions Supply Chain</div>
@@ -369,7 +340,38 @@
 
         <div class="note-text" id="noteText">Sélectionnez une note sur 5</div>
 
-        <div class="section-label">Un commentaire complémentaire ?</div>
+        <div class="motif-block" id="motifBlock">
+          <div class="section-label">Motif d’insatisfaction obligatoire</div>
+
+          <div class="motif-grid">
+            <label class="motif-option">
+              <input type="radio" name="motif" value="Retard ou créneau non respecté">
+              Retard ou créneau non respecté
+            </label>
+
+            <label class="motif-option">
+              <input type="radio" name="motif" value="Communication insuffisante">
+              Communication insuffisante
+            </label>
+
+            <label class="motif-option">
+              <input type="radio" name="motif" value="Problème avec le livreur ou l’intervention">
+              Problème avec le livreur ou l’intervention
+            </label>
+
+            <label class="motif-option">
+              <input type="radio" name="motif" value="Produit abîmé ou prestation incomplète">
+              Produit abîmé ou prestation incomplète
+            </label>
+
+            <label class="motif-option">
+              <input type="radio" name="motif" value="Autre">
+              Autre
+            </label>
+          </div>
+        </div>
+
+        <div class="section-label" id="commentLabel">Un commentaire complémentaire ?</div>
         <textarea
           id="commentaire"
           placeholder="Dites-nous en quelques mots comment s'est passée votre prestation..."
@@ -417,6 +419,7 @@
 
     const p = new URLSearchParams(window.location.search);
     const token = p.get('t') || '';
+    const noteInitiale = parseInt(p.get('note') || '0', 10);
 
     let selectedNote = 0;
 
@@ -432,7 +435,6 @@
       selectedNote = note;
 
       const stars = document.querySelectorAll('.star');
-
       stars.forEach((star, index) => {
         if (index < note) {
           star.classList.add('active');
@@ -443,12 +445,35 @@
 
       document.getElementById('noteText').textContent = labels[note];
       document.getElementById('sendBtn').disabled = false;
+
+      const motifBlock = document.getElementById('motifBlock');
+      const commentLabel = document.getElementById('commentLabel');
+      const commentaire = document.getElementById('commentaire');
+
+      if (note <= 3) {
+        motifBlock.style.display = 'block';
+        commentLabel.textContent = 'Commentaire obligatoire';
+        commentaire.placeholder = "Merci de préciser ce qui n'a pas répondu à vos attentes...";
+      } else {
+        motifBlock.style.display = 'none';
+        commentLabel.textContent = 'Un commentaire complémentaire ?';
+        commentaire.placeholder = "Dites-nous en quelques mots comment s'est passée votre prestation...";
+
+        const checkedMotif = document.querySelector('input[name="motif"]:checked');
+        if (checkedMotif) checkedMotif.checked = false;
+      }
+    }
+
+    function getSelectedMotif() {
+      const checked = document.querySelector('input[name="motif"]:checked');
+      return checked ? checked.value : '';
     }
 
     async function envoyer() {
       const btn = document.getElementById('sendBtn');
       const err = document.getElementById('err');
       const commentaire = document.getElementById('commentaire').value.trim();
+      const motif = getSelectedMotif();
       const formBlock = document.getElementById('formBlock');
       const finalMessage = document.getElementById('finalMessage');
       const reviewBlock = document.getElementById('reviewBlock');
@@ -466,6 +491,18 @@
         return;
       }
 
+      if (selectedNote <= 3 && !motif) {
+        err.textContent = "Merci de sélectionner un motif d’insatisfaction.";
+        err.style.display = 'block';
+        return;
+      }
+
+      if (selectedNote <= 3 && commentaire.length < 3) {
+        err.textContent = "Merci de laisser un commentaire pour nous aider à comprendre la situation.";
+        err.style.display = 'block';
+        return;
+      }
+
       err.style.display = 'none';
       btn.disabled = true;
       btn.textContent = 'Envoi en cours...';
@@ -477,17 +514,16 @@
           body: JSON.stringify({
             token: token,
             note: selectedNote,
+            note_initiale: noteInitiale || '',
             commentaire: commentaire,
+            motif_insatisfaction: selectedNote <= 3 ? motif : '',
             date: new Date().toISOString()
           })
         });
 
-        if (!res.ok) {
-          throw new Error('Erreur webhook');
-        }
+        if (!res.ok) throw new Error('Erreur webhook');
 
         let data = {};
-
         try {
           data = await res.json();
         } catch (e) {
@@ -508,6 +544,10 @@
         btn.disabled = false;
         btn.textContent = 'Envoyer mon retour';
       }
+    }
+
+    if (noteInitiale >= 1 && noteInitiale <= 5) {
+      selectNote(noteInitiale);
     }
   </script>
 </body>
