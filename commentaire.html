@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Merci pour votre retour | Distritec</title>
+
   <style>
     :root {
       --brand-primary: #BB2A0A;
@@ -13,11 +14,13 @@
       --text-main: #1f1f1c;
       --text-soft: #5f5d57;
       --border: #e7e2d9;
-      --success-bg: #f7ebe7;
-      --green: #28a745;
-      --warning-bg: #fff6f3;
-      --warning-border: #f2d4ca;
-      --warning-text: #8f2d17;
+      --green: #238747;
+      --green-soft: #eefaf2;
+      --green-border: #d9efe1;
+      --orange: #ff8a00;
+      --red-soft: #fff2f0;
+      --red-border: #f3b8ad;
+      --red-text: #b33425;
       --star-off: #d7d3cc;
       --star-on: #BB2A0A;
     }
@@ -127,7 +130,7 @@
       font-size: 38px;
       line-height: 1;
       color: var(--star-off);
-      transition: transform 0.12s ease, color 0.12s ease, opacity 0.12s ease;
+      transition: transform 0.12s ease, color 0.12s ease;
     }
 
     .star-btn:hover {
@@ -143,6 +146,58 @@
       font-size: 14px;
       font-weight: 600;
       color: var(--text-soft);
+    }
+
+    .negative-header {
+      display: none;
+      align-items: center;
+      gap: 14px;
+      margin: 22px 0 18px;
+    }
+
+    .sad-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #e33110 0%, #c82108 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      flex-shrink: 0;
+    }
+
+    .negative-title {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.3;
+      font-weight: 800;
+      color: #151515;
+    }
+
+    .negative-alert {
+      display: none;
+      margin-bottom: 22px;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--red-border);
+      background: var(--red-soft);
+      color: var(--red-text);
+      font-size: 14px;
+      line-height: 1.55;
+      font-weight: 700;
+    }
+
+    .negative-alert-inner {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .shield {
+      font-size: 25px;
+      line-height: 1;
     }
 
     .dynamic-block {
@@ -167,11 +222,12 @@
       display: inline-block;
       margin-left: 8px;
       font-size: 11px;
-      color: var(--warning-text);
+      color: var(--red-text);
       background: #fdece6;
       padding: 3px 8px;
       border-radius: 999px;
       vertical-align: middle;
+      font-weight: 800;
     }
 
     .field-label {
@@ -216,11 +272,12 @@
       margin-top: 14px;
       padding: 14px 16px;
       border-radius: 14px;
-      background: var(--warning-bg);
-      border: 1px solid var(--warning-border);
-      color: var(--warning-text);
+      background: var(--red-soft);
+      border: 1px solid var(--red-border);
+      color: var(--red-text);
       font-size: 13px;
       line-height: 1.6;
+      font-weight: 600;
     }
 
     button.primary {
@@ -251,8 +308,7 @@
       cursor: not-allowed;
     }
 
-    .err,
-    .final-message {
+    .err {
       display: none;
       margin-top: 16px;
       padding: 14px 16px;
@@ -260,80 +316,105 @@
       font-size: 14px;
       font-weight: 600;
       line-height: 1.6;
-    }
-
-    .err {
       background: #fff1ef;
       color: #b42318;
     }
 
     .final-message {
-      background: #f8fbf8;
-      border: 1px solid #d8eadc;
-      color: #1f4d2a;
-      margin-top: 24px;
+      display: none;
+      margin-top: 16px;
+      padding: 16px 8px;
       text-align: center;
     }
 
-    .check-container {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 18px;
-    }
-
-    .check-circle {
-      width: 72px;
-      height: 72px;
+    .final-icon {
+      margin: 0 auto 22px auto;
+      width: 86px;
+      height: 86px;
       border-radius: 50%;
-      background: var(--green);
-      color: white;
-      font-size: 38px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 50px;
       display: flex;
       align-items: center;
       justify-content: center;
       animation: pop 0.35s ease;
-      box-shadow: 0 8px 20px rgba(40, 167, 69, 0.18);
+    }
+
+    .final-icon.warning {
+      background: transparent;
+      color: var(--orange);
+      font-size: 78px;
     }
 
     .final-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #1f4d2a;
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      line-height: 1.25;
+      color: var(--green);
+    }
+
+    .final-title.warning {
+      color: var(--orange);
     }
 
     .final-text {
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.7;
-      color: #3d4b40;
+      color: #4a4a4a;
     }
 
     .review-box {
       display: none;
-      margin-top: 18px;
+      margin-top: 24px;
       padding: 18px;
       border-radius: 16px;
-      background: #fffaf7;
-      border: 1px solid #f0ddd6;
+      background: #fbfffc;
+      border: 1px solid var(--green-border);
       text-align: center;
     }
 
-    .review-box p {
-      margin: 0 0 14px 0;
-      font-size: 14px;
+    .review-box-inner {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      text-align: left;
+      margin-bottom: 18px;
+      color: #355b40;
+      font-size: 15px;
       line-height: 1.6;
-      color: var(--text-soft);
+      font-weight: 600;
+    }
+
+    .review-star {
+      font-size: 34px;
+      color: var(--green);
+      line-height: 1;
+      flex-shrink: 0;
     }
 
     .review-link {
-      display: inline-block;
+      display: block;
       text-decoration: none;
       background: var(--brand-primary);
       color: #fff;
-      padding: 12px 18px;
+      padding: 15px 18px;
       border-radius: 12px;
-      font-size: 14px;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .no-thanks {
+      display: inline-block;
+      margin-top: 16px;
+      color: var(--brand-primary);
+      font-size: 15px;
       font-weight: 700;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      font-family: inherit;
     }
 
     .footer-note {
@@ -352,14 +433,8 @@
     }
 
     @keyframes pop {
-      0% {
-        transform: scale(0.65);
-        opacity: 0;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
+      0% { transform: scale(0.65); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     @media (max-width: 640px) {
@@ -377,6 +452,14 @@
 
       .star-btn {
         font-size: 34px;
+      }
+
+      .negative-title {
+        font-size: 19px;
+      }
+
+      .negative-header {
+        align-items: flex-start;
       }
     }
   </style>
@@ -396,12 +479,12 @@
         </div>
       </div>
 
-      <h1>Votre retour nous aide à progresser</h1>
-      <p class="intro" id="message">
-        Merci pour votre retour.
-      </p>
-
       <div id="formBlock">
+        <h1>Votre retour nous aide à progresser</h1>
+        <p class="intro">
+          Merci de prendre quelques instants pour partager votre expérience.
+        </p>
+
         <div class="rating-box">
           <div class="section-label">Votre note</div>
           <div class="stars" id="stars">
@@ -414,6 +497,22 @@
           <div class="rating-text" id="ratingText">Sélectionnez une note.</div>
         </div>
 
+        <div class="negative-header" id="negativeHeader">
+          <div class="sad-icon">☹</div>
+          <h2 class="negative-title">
+            Nous sommes désolés que l’intervention n’ait pas été à la hauteur
+          </h2>
+        </div>
+
+        <div class="negative-alert" id="negativeAlert">
+          <div class="negative-alert-inner">
+            <div class="shield">🛡️</div>
+            <div>
+              Votre retour va être traité en priorité par notre équipe qualité afin de comprendre la situation et éviter que cela ne se reproduise.
+            </div>
+          </div>
+        </div>
+
         <div class="dynamic-block">
           <h2 class="dynamic-title" id="dynamicTitle">Un commentaire complémentaire ?</h2>
           <p class="dynamic-desc" id="dynamicDesc">
@@ -422,9 +521,10 @@
 
           <div id="lowRatingBlock" class="hidden">
             <label class="field-label" for="reasonSelect">
-              Motif principal
+              Quel est le motif principal de votre insatisfaction ?
               <span class="required-badge">Obligatoire</span>
             </label>
+
             <select id="reasonSelect">
               <option value="">Sélectionnez une raison</option>
               <option value="Rendez-vous / planification">Rendez-vous / planification</option>
@@ -443,6 +543,7 @@
           <label class="field-label" for="commentaire" id="commentLabel">
             Votre commentaire
           </label>
+
           <textarea
             id="commentaire"
             placeholder="Dites-nous quelques mots sur votre expérience..."
@@ -457,28 +558,34 @@
       </div>
 
       <div class="final-message" id="finalMessage">
-        <div class="check-container">
-          <div class="check-circle">✓</div>
+        <div class="final-icon" id="finalIcon">✓</div>
+
+        <div class="final-title" id="finalTitle">
+          Merci pour votre retour !
         </div>
-        <div class="final-title">Retour bien transmis</div>
+
         <div class="final-text" id="finalText">
-          Merci, votre retour a bien été transmis.<br>
-          Vous pouvez fermer cette fenêtre.<br><br>
-          Distritec vous remercie pour votre confiance.
+          Votre satisfaction est notre priorité<br />
+          et nous motive à maintenir un haut niveau de qualité.
         </div>
 
         <div class="review-box" id="reviewBox">
-          <p>
-            Merci beaucoup pour votre excellente note.<br>
-            Si vous le souhaitez, vous pouvez également laisser un avis sur notre agence.
-          </p>
+          <div class="review-box-inner">
+            <div class="review-star">☆</div>
+            <div>
+              Si vous le souhaitez, partagez votre expérience et aidez d’autres professionnels à nous faire confiance.
+            </div>
+          </div>
+
           <a class="review-link" id="reviewLink" href="#" target="_blank" rel="noopener noreferrer">
-            Laisser un avis sur notre agence
+            Laisser un avis sur notre agence ↗
           </a>
+
+          <button class="no-thanks" onclick="hideReviewBox()">Non, merci</button>
         </div>
       </div>
 
-      <div class="footer-note">
+      <div class="footer-note" id="footerNote">
         Votre retour aide Distritec à améliorer en continu la qualité de ses prestations.
       </div>
     </div>
@@ -490,13 +597,13 @@
     const p = new URLSearchParams(window.location.search);
     const token = p.get('t') || '';
     const rawRating = p.get('r') || '';
-const initialNote = rawRating.startsWith('x')
-  ? Number(rawRating.replace('x', ''))
-  : 0;
+
+    const initialNote = rawRating.startsWith('x')
+      ? Number(rawRating.replace('x', ''))
+      : 0;
 
     let selectedRating = initialNote;
 
-    const message = document.getElementById('message');
     const ratingText = document.getElementById('ratingText');
     const stars = Array.from(document.querySelectorAll('.star-btn'));
     const dynamicTitle = document.getElementById('dynamicTitle');
@@ -509,9 +616,14 @@ const initialNote = rawRating.startsWith('x')
     const sendBtn = document.getElementById('sendBtn');
     const formBlock = document.getElementById('formBlock');
     const finalMessage = document.getElementById('finalMessage');
+    const finalIcon = document.getElementById('finalIcon');
+    const finalTitle = document.getElementById('finalTitle');
     const finalText = document.getElementById('finalText');
     const reviewBox = document.getElementById('reviewBox');
     const reviewLink = document.getElementById('reviewLink');
+    const negativeHeader = document.getElementById('negativeHeader');
+    const negativeAlert = document.getElementById('negativeAlert');
+    const footerNote = document.getElementById('footerNote');
 
     const ratingLabels = {
       1: 'Très insatisfait',
@@ -537,22 +649,31 @@ const initialNote = rawRating.startsWith('x')
         ratingText.textContent = 'Sélectionnez une note.';
       }
 
-      if (selectedRating >= 4) {
-        dynamicTitle.textContent = 'Un commentaire complémentaire ?';
-        dynamicDesc.textContent = 'Votre retour nous aide à améliorer en continu la qualité de nos prestations.';
-        lowRatingBlock.classList.add('hidden');
-        commentLabel.innerHTML = 'Votre commentaire';
-        commentaire.placeholder = 'Dites-nous quelques mots sur votre expérience...';
-      } else if (selectedRating >= 1 && selectedRating <= 3) {
+      if (selectedRating >= 1 && selectedRating <= 3) {
+        negativeHeader.style.display = 'flex';
+        negativeAlert.style.display = 'block';
+
         dynamicTitle.textContent = 'Pour quelle raison n’êtes-vous pas totalement satisfait ?';
-        dynamicDesc.textContent = 'Votre retour est important pour nous permettre d’identifier précisément ce qui n’a pas répondu à vos attentes.';
+        dynamicDesc.textContent =
+          'Votre retour est important pour nous permettre d’identifier précisément ce qui n’a pas répondu à vos attentes.';
+
         lowRatingBlock.classList.remove('hidden');
-        commentLabel.innerHTML = 'Votre commentaire <span class="required-badge">Obligatoire</span>';
-        commentaire.placeholder = 'Décrivez-nous ce qui n’allait pas et ce qui pourrait être amélioré...';
+
+        commentLabel.innerHTML =
+          'Votre commentaire <span class="required-badge">Obligatoire</span>';
+
+        commentaire.placeholder =
+          "Décrivez-nous ce qui n’allait pas et ce qui pourrait être amélioré...";
       } else {
+        negativeHeader.style.display = 'none';
+        negativeAlert.style.display = 'none';
+
         dynamicTitle.textContent = 'Un commentaire complémentaire ?';
-        dynamicDesc.textContent = 'Votre retour nous aide à améliorer en continu la qualité de nos prestations.';
+        dynamicDesc.textContent =
+          'Votre retour nous aide à améliorer en continu la qualité de nos prestations.';
+
         lowRatingBlock.classList.add('hidden');
+
         commentLabel.innerHTML = 'Votre commentaire';
         commentaire.placeholder = 'Dites-nous quelques mots sur votre expérience...';
       }
@@ -561,18 +682,67 @@ const initialNote = rawRating.startsWith('x')
     function showFinalScreen(data) {
       formBlock.classList.add('hidden');
       finalMessage.style.display = 'block';
+      footerNote.style.display = 'none';
+
+      if (selectedRating >= 1 && selectedRating <= 3) {
+        finalIcon.className = 'final-icon warning';
+        finalIcon.textContent = '⚠';
+
+        finalTitle.className = 'final-title warning';
+        finalTitle.innerHTML = 'Votre retour a été transmis à<br />notre équipe qualité';
+
+        finalText.innerHTML =
+          'Un responsable peut être amené à vous recontacter<br />' +
+          'afin de mieux comprendre la situation.<br /><br />' +
+          '<strong>Merci de nous aider à progresser.</strong><br /><br />' +
+          'Vous pouvez maintenant fermer cette fenêtre.';
+
+        reviewBox.style.display = 'none';
+        return;
+      }
+
+      if (selectedRating === 5) {
+        finalIcon.className = 'final-icon';
+        finalIcon.textContent = '✓';
+
+        finalTitle.className = 'final-title';
+        finalTitle.innerHTML = 'Merci pour votre retour !';
+
+        finalText.innerHTML =
+          'Votre satisfaction est notre priorité<br />' +
+          'et nous motive à maintenir un haut niveau de qualité.';
+
+        if (data && data.show_review === true && data.review_url) {
+          reviewLink.href = data.review_url;
+          reviewBox.style.display = 'block';
+        } else {
+          reviewBox.style.display = 'none';
+        }
+
+        return;
+      }
+
+      finalIcon.className = 'final-icon';
+      finalIcon.textContent = '✓';
+
+      finalTitle.className = 'final-title';
+      finalTitle.innerHTML = 'Retour bien transmis';
 
       finalText.innerHTML =
-        'Merci, votre retour a bien été transmis.<br>' +
-        'Vous pouvez fermer cette fenêtre.<br><br>' +
-        'Distritec vous remercie pour votre confiance.';
+        'Merci, votre retour a bien été transmis.<br />' +
+        'Distritec vous remercie pour votre confiance.<br /><br />' +
+        'Vous pouvez maintenant fermer cette fenêtre.';
 
-      if (data && data.show_review === true && data.review_url) {
-        reviewLink.href = data.review_url;
-        reviewBox.style.display = 'block';
-      } else {
-        reviewBox.style.display = 'none';
-      }
+      reviewBox.style.display = 'none';
+    }
+
+    function hideReviewBox() {
+      reviewBox.style.display = 'none';
+
+      finalText.innerHTML =
+        'Merci, votre retour a bien été transmis.<br />' +
+        'Distritec vous remercie pour votre confiance.<br /><br />' +
+        'Vous pouvez maintenant fermer cette fenêtre.';
     }
 
     stars.forEach((star) => {
@@ -651,8 +821,6 @@ const initialNote = rawRating.startsWith('x')
         sendBtn.textContent = 'Envoyer mon retour';
       }
     }
-
-    message.textContent = 'Merci de prendre quelques instants pour partager votre expérience.';
 
     updateDynamicUI();
   </script>
